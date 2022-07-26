@@ -4,10 +4,16 @@
 class Ship : public Entity
 {
 private:
-	string art;
+	int lives;
+	int score;
+
 public:
-	Ship(Position position, Size size);
-	void draw();
+	Ship(int _lives, int _score, Position _position, Size _size, Movement _movement);
+	void draw(int x, int y);
+	void takeDamage();
+	void shootBullets();
+	void addScore();
+	
 
 };
 

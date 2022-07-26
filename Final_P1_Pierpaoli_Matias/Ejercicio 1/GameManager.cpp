@@ -3,11 +3,27 @@
 GameManager::GameManager()
 {
 	Position position;
-	Size size;
+	position.setX(20);
+	position.setY(10);
+	
+	Size shipSize;
+	shipSize.setX(13);
+	shipSize.setY(9);
 
-	entities[0] = new Ship(3, 0, 0, position, size);
-	entities[0] = new Bullet(position, size);
-	entities[0] = new Asteroid(position, size);
+	Size asteroidSize;
+	asteroidSize.setX(5);
+	asteroidSize.setY(2);
+
+	Size bulletpSize;
+	bulletpSize.setX(1);
+	bulletpSize.setY(3);
+	
+	
+	Movement movement = Movement();
+
+	entities[0] = new Ship(3, 0, position, shipSize, movement);
+	entities[1] = new Bullet(position, asteroidSize, movement);
+	entities[2] = new Asteroid(position, bulletpSize, movement);
 
 }
 
@@ -26,16 +42,56 @@ void GameManager::gameLoop()
 	{
 		drawScreen();
 		updateScreen();
+
+		Sleep(300);
+		clearScreen();
 	}
 }
 
-void drawScreen()
+int GameManager::getEntitiesAmount()
 {
-
+	return entitiesAmount;
 }
 
-void updateScreen()
+void GameManager::drawScreen()
 {
+	/*for (int i = 0; i < getEntitiesAmount(); i++)
+	{
+		entities[i]->draw(entities[i]->position.getX(), entities[i]->position.getY());
+	}*/
+
+	entities[0]->draw(entities[0]->position.getX(), entities[0]->position.getY());
+
+	
+}
+
+void GameManager::updateScreen()
+{
+	if(_kbhit())
+	{
+		char tecla = _getch();
+		switch (tecla)
+		{
+		case 'a':
+			entities[0]->movement.travelLeft((entities[0]->position.getY()));
+			break;
+		case 'd':
+			entities[0]->movement.travelRight((entities[0]->position.getY()));
+			break;
+		default:
+			break;
+		}
+	}
+
+
+
+
+
+
+	//cout << entities[0]->position.getY() << endl;
+	///*entities[0]->position.setX(entities[0]->movement.travelUp(entities[0]->position.getX()));*/
+	//entities[0]->movement.travelUp((entities[0]->position.getY()));
+	//cout << entities[0]->position.getY() << endl;
 
 }
 

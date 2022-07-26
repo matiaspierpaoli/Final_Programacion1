@@ -4,10 +4,12 @@
 #include "Asteroid.h"
 
 
+
 class GameManager
 {
 private:
-	Entity* entities[3];
+	static const int entitiesAmount = 3;
+	Entity* entities[entitiesAmount];
 	bool exit = false; // Exit
 
 	void drawScreen();
@@ -17,6 +19,7 @@ public:
 	GameManager(); // Constructor
 	~GameManager(); // Destructor
 	void gameLoop(); // Main game loop called in main()
+	int getEntitiesAmount();
 
 
 

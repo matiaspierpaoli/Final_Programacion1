@@ -4,9 +4,9 @@
 class Bullet : public Entity
 {
 private:
-	string art;
 public:
-	Bullet(Position position, Size size);
-	void draw();
+	Bullet(Position _position, Size _size, Movement _movement);
+	void draw(int x, int y);
+	
 
 };

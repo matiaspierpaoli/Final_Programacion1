@@ -1,16 +1,21 @@
 #pragma once
 #include "Header.h"
-
+#include "Movement.h"
 
 class Entity
 {
 private:
-	Position position;
-	Size size;
+	
 
 public:
-	Entity(Position position, Size size);
-	virtual void draw();
+
+	Entity(Position _position, Size _size, Movement _movement);
+
+	Position position;
+	Size size;
+	Movement movement;
+
+	virtual void draw(int x, int y);
 
 
 

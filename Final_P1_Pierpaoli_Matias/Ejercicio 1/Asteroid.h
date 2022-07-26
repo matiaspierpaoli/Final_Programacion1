@@ -4,9 +4,9 @@
 class Asteroid : public Entity
 {
 private:
-	string art;
 public:
-	Asteroid(Position position, Size size);
-	void draw();
+	Asteroid(Position _position, Size _size, Movement _movement);
+	void draw(int x, int y);
+	
 
 };

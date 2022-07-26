@@ -1,14 +1,13 @@
 #include "Bullet.h"
 
-Bullet::Bullet(Position _position, Size _size) : Entity(_position, _size)
+Bullet::Bullet(Position _position, Size _size, Movement _movement) : Entity(_position, _size, _movement)
 {
-	ifstream inputStream;
-	inputStream.open("../Ejercicio 1/Art/Bullet.txt", ios::in);
-	inputStream >> art;
-	inputStream.close();
+	
 }
 
-void Bullet::draw()
+void Bullet::draw(int x, int y)
 {
-	cout << art;
+	
+
 }
+
