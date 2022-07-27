@@ -2,13 +2,21 @@
 
 GameManager::GameManager()
 {
-	Position position;
-	position.setX(20);
-	position.setY(10);
+	Position shipPosition;
+	shipPosition.setX(getScreenWidth() / 2 + 5);
+	shipPosition.setY(getScreenHeight() - 3);
+
+	Position asteroidPosition;
+	asteroidPosition.setX(-5);
+	asteroidPosition.setY(-5);
+
+	Position bulletPosition;
+	bulletPosition.setX(-5);
+	bulletPosition.setY(-5);
 	
 	Size shipSize;
-	shipSize.setX(13);
-	shipSize.setY(9);
+	shipSize.setX(5);
+	shipSize.setY(3);
 
 	Size asteroidSize;
 	asteroidSize.setX(5);
@@ -19,9 +27,11 @@ GameManager::GameManager()
 	bulletpSize.setY(3);
 
 
-	entities[0] = new Ship(3, 0, position, shipSize);
-	entities[1] = new Bullet(position, asteroidSize);
-	entities[2] = new Asteroid(position, bulletpSize);
+	entities[0] = new Ship(3, 0, shipPosition, shipSize);
+	entities[1] = new Bullet(asteroidPosition, asteroidSize);
+	entities[2] = new Asteroid(bulletPosition, bulletpSize);
+
+	hideCursor();
 
 }
 
@@ -73,10 +83,10 @@ void GameManager::updateScreen()
 		char tecla = _getch();
 		switch (tecla)
 		{
-		case 'a':
-			entities[0]->travelLeft();
+		case 'a':			
+			entities[0]->travelLeft();		
 			break;
-		case 'd':
+		case 'd':			
 			entities[0]->travelRight();
 			break;
 		default:

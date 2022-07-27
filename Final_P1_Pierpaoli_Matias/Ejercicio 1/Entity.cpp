@@ -13,20 +13,35 @@ void Entity::draw(int x, int y)
 
 void Entity::travelUp()
 {
-	position.setY(position.getY() - 1);
+	if (position.getY() <= 5)
+		position.setY(5);
+	else
+		position.setY(position.getY() - 1);
 }
 
 void Entity::travelDown()
 {
-	position.setY(position.getY() + 1);
+	if (position.getY() <= getScreenHeight() - 2)
+		position.setY(2);
+	else
+		position.setY(position.getY() + 1);
 }
 
 void Entity::travelLeft()
 {
-	position.setX(position.getX() - 1);
+	if (position.getX() <= 3)
+		position.setX(3);
+	else
+		position.setX(position.getX() - 3);		
 }
 
 void Entity::travelRight()
 {
-	position.setX(position.getX() + 1);
+	if (position.getX() + size.getX() >= getScreenWidth() - 1)
+		position.setX(getScreenWidth() - 1 - size.getX());	
+	else
+		position.setX(position.getX() + 3);
+		
 }
+
+

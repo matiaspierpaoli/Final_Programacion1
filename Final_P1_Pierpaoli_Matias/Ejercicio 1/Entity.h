@@ -18,5 +18,6 @@ public:
 	void travelDown();
 	void travelLeft();
 	void travelRight();
+	
 
 };
