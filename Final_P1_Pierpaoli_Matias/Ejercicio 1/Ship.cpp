@@ -1,6 +1,6 @@
 #include "Ship.h"
 
-Ship::Ship(int _lives, int _score, Position _position, Size _size, Movement _movement) : Entity(_position,  _size, _movement)
+Ship::Ship(int _lives, int _score, Position _position, Size _size) : Entity(_position,  _size)
 {
 	lives = _lives;
 	score = _score;

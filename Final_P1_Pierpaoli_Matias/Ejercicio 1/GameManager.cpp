@@ -17,13 +17,11 @@ GameManager::GameManager()
 	Size bulletpSize;
 	bulletpSize.setX(1);
 	bulletpSize.setY(3);
-	
-	
-	Movement movement = Movement();
 
-	entities[0] = new Ship(3, 0, position, shipSize, movement);
-	entities[1] = new Bullet(position, asteroidSize, movement);
-	entities[2] = new Asteroid(position, bulletpSize, movement);
+
+	entities[0] = new Ship(3, 0, position, shipSize);
+	entities[1] = new Bullet(position, asteroidSize);
+	entities[2] = new Asteroid(position, bulletpSize);
 
 }
 
@@ -40,10 +38,10 @@ void GameManager::gameLoop()
 	// Main game loop
 	while (!exit) // While exit or ESC is not pressed in menu
 	{
-		drawScreen();
 		updateScreen();
+		drawScreen();		
 
-		Sleep(300);
+		Sleep(100);
 		clearScreen();
 	}
 }
@@ -73,10 +71,10 @@ void GameManager::updateScreen()
 		switch (tecla)
 		{
 		case 'a':
-			entities[0]->movement.travelLeft((entities[0]->position.getY()));
+			entities[0]->travelLeft();
 			break;
 		case 'd':
-			entities[0]->movement.travelRight((entities[0]->position.getY()));
+			entities[0]->travelRight();
 			break;
 		default:
 			break;
@@ -84,14 +82,6 @@ void GameManager::updateScreen()
 	}
 
 
-
-
-
-
-	//cout << entities[0]->position.getY() << endl;
-	///*entities[0]->position.setX(entities[0]->movement.travelUp(entities[0]->position.getX()));*/
-	//entities[0]->movement.travelUp((entities[0]->position.getY()));
-	//cout << entities[0]->position.getY() << endl;
 
 }
 

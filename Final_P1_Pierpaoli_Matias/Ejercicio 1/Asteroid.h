@@ -5,7 +5,7 @@ class Asteroid : public Entity
 {
 private:
 public:
-	Asteroid(Position _position, Size _size, Movement _movement);
+	Asteroid(Position _position, Size _size);
 	void draw(int x, int y);
 	
 

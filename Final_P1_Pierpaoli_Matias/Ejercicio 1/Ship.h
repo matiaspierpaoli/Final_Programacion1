@@ -8,7 +8,7 @@ private:
 	int score;
 
 public:
-	Ship(int _lives, int _score, Position _position, Size _size, Movement _movement);
+	Ship(int _lives, int _score, Position _position, Size _size);
 	void draw(int x, int y);
 	void takeDamage();
 	void shootBullets();
