@@ -5,8 +5,6 @@
 #include "HUD.h"
 #include "PlayerStats.h"
 
-
-
 class GameManager
 {
 private:
@@ -18,9 +16,6 @@ private:
 	HUD hud;
 	PlayerStats playerStats;
 	bool exit = false; // Exit
-
-	Position bulletPosition;
-	Size bulletSize;
 
 	void drawScreen();
 	void updateScreen();

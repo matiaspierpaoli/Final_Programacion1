@@ -1,6 +1,6 @@
 #include "Ship.h"
 
-Ship::Ship(int _lives, int _score, Position _position, Size _size) : Entity(_position,  _size)
+Ship::Ship(int _lives, int _score, Position* _position, Size* _size) : Entity(_position,  _size)
 {
 	lives = _lives;
 	score = _score;
@@ -22,12 +22,9 @@ void Ship::takeDamage()
 	lives--;
 }
 
-void Ship::shootBullets()
-{
-}
-
 void Ship::addScore()
 {
+	score++;
 }
 
 int Ship::getCurrentLives()
@@ -42,10 +39,10 @@ int Ship::getCurrentScore()
 
 void Ship::explode()
 {
-	goToCoordinates(position.getX(), position.getY());
+	goToCoordinates(getPosition().getX(), getPosition().getY());
 	cout << "   **   " << endl;
-	goToCoordinates(position.getX(), position.getY() + 1);
+	goToCoordinates(getPosition().getX(), getPosition().getY() + 1);
 	cout << "  ****  " << endl;
-	goToCoordinates(position.getX(), position.getY() + 2);
+	goToCoordinates(getPosition().getX(), getPosition().getY() + 2);
 	cout << "   **   " << endl;
 }

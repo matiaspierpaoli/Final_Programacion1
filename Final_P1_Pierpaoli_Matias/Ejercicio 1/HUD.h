@@ -1,4 +1,5 @@
 #pragma once
+#include "Header.h"
 
 class HUD
 {
@@ -7,6 +8,7 @@ public :
 	~HUD();
 	void showVictory();
 	void showDefeat();
+	void drawFrameHUD();
 
 
 

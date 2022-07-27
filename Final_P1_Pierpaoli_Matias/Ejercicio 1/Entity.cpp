@@ -1,9 +1,15 @@
 #include "Entity.h"
 
-Entity::Entity(Position _position, Size _size)
-{
+Entity::Entity(Position* _position, Size* _size)
+{	
 	position = _position;
 	size = _size;
+}
+
+Entity::~Entity()
+{
+	delete position;
+	delete size;
 }
 
 void Entity::draw(int x, int y)
@@ -13,22 +19,32 @@ void Entity::draw(int x, int y)
 
 void Entity::travelUp()
 {	
-	position.setY(position.getY() - 1);
+	position->setY(position->getY() - 1);
 }
 
 void Entity::travelDown()
 {	
-	position.setY(position.getY() + 1);
+	position->setY(position->getY() + 1);
 }
 
 void Entity::travelLeft()
 {	
-	position.setX(position.getX() - 3);		
+	position->setX(position->getX() - 1);
 }
 
 void Entity::travelRight()
 {	
-	position.setX(position.getX() + 3);		
+	position->setX(position->getX() + 1);
+}
+
+Position Entity::getPosition()
+{
+	return *position;
+}
+
+Size Entity::getSize()
+{
+	return *size;
 }
 
 bool Entity::checkCollision(Position position1, Size size1, Position position2, Size size2)
@@ -44,23 +60,29 @@ bool Entity::checkCollision(Position position1, Size size1, Position position2, 
 
 bool Entity::outOfBounds()
 {
-	if (position.getY() <= 5)
+	if (position->getY() <= 5)
 	{		
 		return true;
 	}
-	else if (position.getY() + size.getHeight() >= getScreenHeight())
+	else if (position->getY() + size->getHeight() >= getScreenHeight())
 	{		
 		return true;
 	}
-	else if (position.getX() <= 1)
+	else if (position->getX() <= 1)
 	{			
 		return true;
 	}
-	else if (position.getX() + size.getWidth() >= getScreenWidth())
+	else if (position->getX() + size->getWidth() >= getScreenWidth())
 	{		
 		return true;
 	}
 	else return false;
+}
+
+void Entity::respawnAsteroid()
+{
+	position->setX(rand() % (getScreenWidth() - 6) + 3);
+	position->setY(6);
 }
 
 

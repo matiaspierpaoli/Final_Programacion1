@@ -1,6 +1,6 @@
 #include "Bullet.h"
 
-Bullet::Bullet(Position _position, Size _size) : Entity(_position, _size)
+Bullet::Bullet(Position* _position, Size* _size) : Entity(_position, _size)
 {
 	
 }

@@ -2,10 +2,21 @@
 
 PlayerStats::PlayerStats() 
 {
+	activeAsteroids = 0;
 }
 
 PlayerStats::~PlayerStats()
 {
+}
+
+void PlayerStats::addActiveAsteroids()
+{
+	activeAsteroids++;
+}
+
+void PlayerStats::substractActiveAsteroids()
+{
+	activeAsteroids--;
 }
 
 void PlayerStats::drawLives(int lives)
@@ -22,4 +33,6 @@ void PlayerStats::drawScore(int score)
 
 void PlayerStats::drawActiveAsteroids()
 {
+	goToCoordinates(getScreenWidth() / 2 - 10, 1);
+	cout << "Active Asteroids: " << activeAsteroids << endl;
 }

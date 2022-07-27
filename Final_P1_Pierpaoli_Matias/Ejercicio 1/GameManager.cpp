@@ -2,38 +2,14 @@
 
 GameManager::GameManager()
 {
-	Position shipPosition;
-	shipPosition.setX(getScreenWidth() / 2 + 5);
-	shipPosition.setY(getScreenHeight() - 4);
-
-	Position asteroidPosition;
-	asteroidPosition.setX(rand() % 71 + 3);
-	asteroidPosition.setY(6);
-
-	bulletSize.setHeight(1);
-	bulletSize.setWidth(1);
-	
-	Size shipSize;
-	shipSize.setWidth(6);
-	shipSize.setHeight(3);
-
-	Size asteroidSize;
-	asteroidSize.setWidth(1);
-	asteroidSize.setHeight(1);
-
-	Size bulletpSize;
-	bulletpSize.setWidth(1);
-	bulletpSize.setHeight(3);
-
 	hud = HUD();
 	playerStats = PlayerStats();
-
-	ship = new Ship(3, 0, shipPosition, shipSize);
+	
+	ship = new Ship(3, 0, new Position(getScreenWidth() / 2 + 5, getScreenHeight() - 4), new Size(6, 3));
 
 	for (int i = 0; i < asteroidsAmount; i++)
-	{
-		asteroidPosition.setX(rand() % 71 + 3);
-		asteroids[i] = new Asteroid(asteroidPosition, asteroidSize);	
+	{		
+		asteroids[i] = new Asteroid(new Position(rand() % 71 + 3, rand() % 10 + 6), new Size(1,1));
 	}
 
 	hideCursor();
@@ -71,21 +47,21 @@ void GameManager::drawScreen()
 	playerStats.drawScore(((Ship*)ship)->getCurrentScore());
 	playerStats.drawActiveAsteroids();
 
-	drawFrame(1, 5, getScreenWidth() - 1, getScreenHeight());
+	hud.drawFrameHUD();
 
 	if (((Ship*)ship)->getCurrentLives() <= 0)
 		((Ship*)ship)->explode();
 	else	
-		ship->draw(ship->position.getX(), ship->position.getY());
+		ship->draw(ship->getPosition().getX(), ship->getPosition().getY());
 	
 	for (auto it = bullets.begin(); it != bullets.end(); it ++)
 	{		
-		(*it)->draw((*it)->position.getX(), (*it)->position.getY());
+		(*it)->draw((*it)->getPosition().getX(), (*it)->getPosition().getY());
 	}
 
 	for (int i = 0; i < asteroidsAmount; i++)
 	{
-		asteroids[i]->draw(asteroids[i]->position.getX(), asteroids[i]->position.getY());	
+		asteroids[i]->draw(asteroids[i]->getPosition().getX(), asteroids[i]->getPosition().getY());
 	}	
 }
 
@@ -95,13 +71,11 @@ void GameManager::updateScreen()
 	{
 		char tecla = _getch();
 
-		if (tecla == 'a' && ship->position.getX() > 3) ship->travelLeft();		
-		if (tecla == 'd' && ship->position.getX() + ship->size.getWidth() < getScreenWidth() - 1) ship->travelRight();
+		if (tecla == 'a' && ship->getPosition().getX() > 3) ship->travelLeft();
+		if (tecla == 'd' && ship->getPosition().getX() + ship->getSize().getWidth() < getScreenWidth() - 1) ship->travelRight();
 		if (tecla == 'e')
-		{
-			bulletPosition.setX(ship->position.getX() + ship->size.getWidth() / 2 - 1);
-			bulletPosition.setY(ship->position.getY() - 1);
-			bullets.push_back(new Bullet(bulletPosition, bulletSize));
+		{			
+			bullets.push_back(new Bullet(new Position(ship->getPosition().getX() + ship->getSize().getWidth() / 2 - 1, ship->getPosition().getY() - 1), new Size(1, 1)));
 		}		
 	}
 	
@@ -119,23 +93,52 @@ void GameManager::updateScreen()
 	for (int i = 0; i < asteroidsAmount; i++)
 	{
 		if (asteroids[i]->outOfBounds())
-			((Asteroid*)asteroids[i])->respawn();
+		{
+			asteroids[i]->respawnAsteroid();					
+			playerStats.substractActiveAsteroids();
+		}
 		else
 			asteroids[i]->travelDown();
 	}
 
-	// Collision detection
+	// Collision detection - Ship vs Asteroids
 	for (int i = 0; i < asteroidsAmount; i++)
 	{
-		if (ship->checkCollision(ship->position, ship->size, asteroids[i]->position, asteroids[i]->size))
+		if (ship->checkCollision(ship->getPosition(), ship->getSize(), asteroids[i]->getPosition(), asteroids[i]->getSize()))
 		{
 			((Ship*)ship)->takeDamage();
-			((Asteroid*)asteroids[i])->respawn();
+			asteroids[i]->respawnAsteroid();			
+			playerStats.substractActiveAsteroids();
+		}
+	}
+
+	// Collision detection - Bullets vs Asteroids
+	for (int i = 0; i < asteroidsAmount; i++)
+	{
+		for (auto it = bullets.begin(); it != bullets.end();)
+		{			
+			if ((*it)->checkCollision((*it)->getPosition(), (*it)->getSize(), asteroids[i]->getPosition(), asteroids[i]->getSize()))
+			{
+				delete (*it);
+				it = bullets.erase(it);
+				asteroids[i]->respawnAsteroid();				
+				playerStats.substractActiveAsteroids();
+				((Ship*)ship)->addScore();
+			}
+			else it++;
 		}
 	}
 
 	if (((Ship*)ship)->getCurrentLives() == 0)
+	{
+		hud.showDefeat();
 		exit = true;		
+	}
+	else if (((Ship*)ship)->getCurrentScore() == 10)
+	{
+		hud.showVictory();
+		exit = true;
+	}
 	
 
 
