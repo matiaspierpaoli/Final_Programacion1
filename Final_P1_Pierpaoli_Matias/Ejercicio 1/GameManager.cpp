@@ -58,6 +58,9 @@ void GameManager::drawScreen()
 		entities[i]->draw(entities[i]->position.getX(), entities[i]->position.getY());
 	}*/
 
+	
+	drawFrame(1, 5, getScreenWidth() - 1, getScreenHeight());
+
 	entities[0]->draw(entities[0]->position.getX(), entities[0]->position.getY());
 
 	
