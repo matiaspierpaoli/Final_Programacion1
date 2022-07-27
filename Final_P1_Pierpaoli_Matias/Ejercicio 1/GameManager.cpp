@@ -4,32 +4,37 @@ GameManager::GameManager()
 {
 	Position shipPosition;
 	shipPosition.setX(getScreenWidth() / 2 + 5);
-	shipPosition.setY(getScreenHeight() - 3);
+	shipPosition.setY(getScreenHeight() - 4);
 
 	Position asteroidPosition;
-	asteroidPosition.setX(-5);
-	asteroidPosition.setY(-5);
+	asteroidPosition.setX(rand() % 71 + 3);
+	asteroidPosition.setY(6);
 
-	Position bulletPosition;
-	bulletPosition.setX(-5);
-	bulletPosition.setY(-5);
+	bulletSize.setHeight(1);
+	bulletSize.setWidth(1);
 	
 	Size shipSize;
-	shipSize.setX(5);
-	shipSize.setY(3);
+	shipSize.setWidth(6);
+	shipSize.setHeight(3);
 
 	Size asteroidSize;
-	asteroidSize.setX(5);
-	asteroidSize.setY(2);
+	asteroidSize.setWidth(1);
+	asteroidSize.setHeight(1);
 
 	Size bulletpSize;
-	bulletpSize.setX(1);
-	bulletpSize.setY(3);
+	bulletpSize.setWidth(1);
+	bulletpSize.setHeight(3);
 
+	hud = HUD();
+	playerStats = PlayerStats();
 
-	entities[0] = new Ship(3, 0, shipPosition, shipSize);
-	entities[1] = new Bullet(asteroidPosition, asteroidSize);
-	entities[2] = new Asteroid(bulletPosition, bulletpSize);
+	ship = new Ship(3, 0, shipPosition, shipSize);
+
+	for (int i = 0; i < asteroidsAmount; i++)
+	{
+		asteroidPosition.setX(rand() % 71 + 3);
+		asteroids[i] = new Asteroid(asteroidPosition, asteroidSize);	
+	}
 
 	hideCursor();
 
@@ -37,9 +42,13 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
+	delete ship;
+
+	bullets.clear();
+
 	// Deleting every object to erase memory
-	for (int i = 0; i < 3; i++)	
-		delete entities[i];
+	for (int i = 0; i < asteroidsAmount; i++)
+		delete asteroids[i];
 	
 }
 
@@ -56,24 +65,28 @@ void GameManager::gameLoop()
 	}
 }
 
-int GameManager::getEntitiesAmount()
-{
-	return entitiesAmount;
-}
-
 void GameManager::drawScreen()
 {
-	/*for (int i = 0; i < getEntitiesAmount(); i++)
-	{
-		entities[i]->draw(entities[i]->position.getX(), entities[i]->position.getY());
-	}*/
+	playerStats.drawLives(((Ship*)ship)->getCurrentLives());
+	playerStats.drawScore(((Ship*)ship)->getCurrentScore());
+	playerStats.drawActiveAsteroids();
 
-	
 	drawFrame(1, 5, getScreenWidth() - 1, getScreenHeight());
 
-	entities[0]->draw(entities[0]->position.getX(), entities[0]->position.getY());
-
+	if (((Ship*)ship)->getCurrentLives() <= 0)
+		((Ship*)ship)->explode();
+	else	
+		ship->draw(ship->position.getX(), ship->position.getY());
 	
+	for (auto it = bullets.begin(); it != bullets.end(); it ++)
+	{		
+		(*it)->draw((*it)->position.getX(), (*it)->position.getY());
+	}
+
+	for (int i = 0; i < asteroidsAmount; i++)
+	{
+		asteroids[i]->draw(asteroids[i]->position.getX(), asteroids[i]->position.getY());	
+	}	
 }
 
 void GameManager::updateScreen()
@@ -81,19 +94,49 @@ void GameManager::updateScreen()
 	if(_kbhit())
 	{
 		char tecla = _getch();
-		switch (tecla)
+
+		if (tecla == 'a' && ship->position.getX() > 3) ship->travelLeft();		
+		if (tecla == 'd' && ship->position.getX() + ship->size.getWidth() < getScreenWidth() - 1) ship->travelRight();
+		if (tecla == 'e')
 		{
-		case 'a':			
-			entities[0]->travelLeft();		
-			break;
-		case 'd':			
-			entities[0]->travelRight();
-			break;
-		default:
-			break;
+			bulletPosition.setX(ship->position.getX() + ship->size.getWidth() / 2 - 1);
+			bulletPosition.setY(ship->position.getY() - 1);
+			bullets.push_back(new Bullet(bulletPosition, bulletSize));
+		}		
+	}
+	
+	for (auto it = bullets.begin(); it != bullets.end();)
+	{
+		(*it)->travelUp();
+		if ((*it)->outOfBounds())
+		{
+			delete (*it);
+			it = bullets.erase(it);
+		}
+		else it++;
+	}
+
+	for (int i = 0; i < asteroidsAmount; i++)
+	{
+		if (asteroids[i]->outOfBounds())
+			((Asteroid*)asteroids[i])->respawn();
+		else
+			asteroids[i]->travelDown();
+	}
+
+	// Collision detection
+	for (int i = 0; i < asteroidsAmount; i++)
+	{
+		if (ship->checkCollision(ship->position, ship->size, asteroids[i]->position, asteroids[i]->size))
+		{
+			((Ship*)ship)->takeDamage();
+			((Asteroid*)asteroids[i])->respawn();
 		}
 	}
 
+	if (((Ship*)ship)->getCurrentLives() == 0)
+		exit = true;		
+	
 
 
 }

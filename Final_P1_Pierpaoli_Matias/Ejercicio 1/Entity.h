@@ -18,6 +18,8 @@ public:
 	void travelDown();
 	void travelLeft();
 	void travelRight();
+	bool checkCollision(Position position1, Size size1, Position position2, Size size2);
+	bool outOfBounds();
 	
 
 };

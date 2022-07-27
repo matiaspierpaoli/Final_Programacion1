@@ -7,5 +7,12 @@ Asteroid::Asteroid(Position _position, Size _size) : Entity(_position, _size)
 
 void Asteroid::draw(int x, int y)
 {
-	
+	goToCoordinates(x,y);
+	cout << (char)35 << endl;
+}
+
+void Asteroid::respawn()
+{
+	position.setX(rand() % (getScreenWidth() - 6) + 3);
+	position.setY(6);	
 }

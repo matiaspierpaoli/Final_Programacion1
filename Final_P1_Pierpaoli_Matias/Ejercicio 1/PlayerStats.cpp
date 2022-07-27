@@ -1,17 +1,25 @@
 #include "PlayerStats.h"
 
-PlayerStats::PlayerStats()
+PlayerStats::PlayerStats() 
 {
 }
 
-void PlayerStats::showLives(int lives)
+PlayerStats::~PlayerStats()
 {
 }
 
-void PlayerStats::showScore(int score)
+void PlayerStats::drawLives(int lives)
 {
+	goToCoordinates(3,2);
+	cout << "Lives: " << lives << endl;
 }
 
-void PlayerStats::showActiveAsteroids()
+void PlayerStats::drawScore(int score)
+{
+	goToCoordinates(getScreenWidth() - 10, 2);
+	cout << "Score: " << score << endl;
+}
+
+void PlayerStats::drawActiveAsteroids()
 {
 }

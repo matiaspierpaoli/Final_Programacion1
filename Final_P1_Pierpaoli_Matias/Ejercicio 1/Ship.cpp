@@ -19,6 +19,7 @@ void Ship::draw(int x, int y)
 
 void Ship::takeDamage()
 {
+	lives--;
 }
 
 void Ship::shootBullets()
@@ -27,4 +28,24 @@ void Ship::shootBullets()
 
 void Ship::addScore()
 {
+}
+
+int Ship::getCurrentLives()
+{
+	return lives;
+}
+
+int Ship::getCurrentScore()
+{
+	return score;
+}
+
+void Ship::explode()
+{
+	goToCoordinates(position.getX(), position.getY());
+	cout << "   **   " << endl;
+	goToCoordinates(position.getX(), position.getY() + 1);
+	cout << "  ****  " << endl;
+	goToCoordinates(position.getX(), position.getY() + 2);
+	cout << "   **   " << endl;
 }

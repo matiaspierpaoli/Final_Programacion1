@@ -12,36 +12,55 @@ void Entity::draw(int x, int y)
 }
 
 void Entity::travelUp()
-{
-	if (position.getY() <= 5)
-		position.setY(5);
-	else
-		position.setY(position.getY() - 1);
+{	
+	position.setY(position.getY() - 1);
 }
 
 void Entity::travelDown()
-{
-	if (position.getY() <= getScreenHeight() - 2)
-		position.setY(2);
-	else
-		position.setY(position.getY() + 1);
+{	
+	position.setY(position.getY() + 1);
 }
 
 void Entity::travelLeft()
-{
-	if (position.getX() <= 3)
-		position.setX(3);
-	else
-		position.setX(position.getX() - 3);		
+{	
+	position.setX(position.getX() - 3);		
 }
 
 void Entity::travelRight()
+{	
+	position.setX(position.getX() + 3);		
+}
+
+bool Entity::checkCollision(Position position1, Size size1, Position position2, Size size2)
 {
-	if (position.getX() + size.getX() >= getScreenWidth() - 1)
-		position.setX(getScreenWidth() - 1 - size.getX());	
+	if (position1.getX() < position2.getX() + size2.getWidth() &&
+		position1.getX() + size1.getWidth() > position2.getX() &&
+		position1.getY() < position2.getY() + size2.getHeight() &&
+		position1.getY() + size1.getHeight() > position2.getY())
+		return true;
 	else
-		position.setX(position.getX() + 3);
-		
+		return false;
+}
+
+bool Entity::outOfBounds()
+{
+	if (position.getY() <= 5)
+	{		
+		return true;
+	}
+	else if (position.getY() + size.getHeight() >= getScreenHeight())
+	{		
+		return true;
+	}
+	else if (position.getX() <= 1)
+	{			
+		return true;
+	}
+	else if (position.getX() + size.getWidth() >= getScreenWidth())
+	{		
+		return true;
+	}
+	else return false;
 }
 
 

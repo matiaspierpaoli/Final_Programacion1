@@ -1,15 +1,17 @@
 #pragma once
+#include "Ship.h"
 
-class PlayerStats
-{
+class PlayerStats 
+{ 
 private:
 	
 
 public:
 	PlayerStats();
-	void showLives(int lives);
-	void showScore(int score);
-	void showActiveAsteroids();
+	~PlayerStats();
+	void drawLives(int lives);
+	void drawScore(int score);
+	void drawActiveAsteroids();
 
 
 };

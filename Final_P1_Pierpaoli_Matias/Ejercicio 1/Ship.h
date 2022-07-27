@@ -13,6 +13,9 @@ public:
 	void takeDamage();
 	void shootBullets();
 	void addScore();
+	int getCurrentLives();
+	int getCurrentScore();
+	void explode();
 	
 
 };

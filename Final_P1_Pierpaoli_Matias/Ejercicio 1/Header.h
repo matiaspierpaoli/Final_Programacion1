@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include "list"
 #include "AwesomeLibrary.h"
 
 
@@ -35,23 +36,23 @@ public:
 class Size
 {
 private:
-	int x;
-	int y;
+	int width;
+	int height;
 public:
-	void setX(int _x)
+	void setWidth(int _x)
 	{
-		x = _x;
+		width = _x;
 	}
-	void setY(int _y)
+	void setHeight(int _y)
 	{
-		y = _y;
+		height = _y;
 	}
-	int getX()
+	int getWidth()
 	{
-		return x;
+		return width;
 	}
-	int getY()
+	int getHeight()
 	{
-		return y;
+		return height;
 	}
 };
