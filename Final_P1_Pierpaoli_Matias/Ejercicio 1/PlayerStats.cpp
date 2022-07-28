@@ -22,7 +22,12 @@ void PlayerStats::substractActiveAsteroids()
 void PlayerStats::drawLives(int lives)
 {
 	goToCoordinates(3,2);
-	cout << "Lives: " << lives << endl;
+	cout << "Lives: ";
+	for (int i = 0; i < lives; i++)
+	{
+		goToCoordinates(10 + i, 2);
+		cout << (char)3;
+	}	
 }
 
 void PlayerStats::drawScore(int score)

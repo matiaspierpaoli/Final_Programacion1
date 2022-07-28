@@ -5,7 +5,7 @@ GameManager::GameManager()
 	hud = HUD();
 	playerStats = PlayerStats();
 	
-	ship = new Ship(3, 0, new Position(getScreenWidth() / 2 + 5, getScreenHeight() - 4), new Size(6, 3));
+	ship = new Ship(3, 0, new Position(getScreenWidth() / 2 + 5, getScreenHeight() - 3), new Size(6, 3));
 
 	for (int i = 0; i < asteroidsAmount; i++)
 	{		
@@ -75,8 +75,7 @@ void GameManager::updateScreen()
 	{
 		if (_kbhit())
 		{
-			char tecla = _getch();
-
+			char tecla = _getch();			
 			if (tecla == 'a' && ship->getPosition().getX() > 3) ship->travelLeft();
 			if (tecla == 'd' && ship->getPosition().getX() + ship->getSize().getWidth() < getScreenWidth() - 1) ship->travelRight();
 			if (tecla == 'e')
