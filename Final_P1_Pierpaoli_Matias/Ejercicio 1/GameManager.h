@@ -14,7 +14,7 @@ private:
 
 	// Objects
 	Entity* ship; // Player
-	list<Bullet*> bullets; // Bullets
+	list<Entity*> bullets; // Bullets
 	Entity* asteroids[asteroidsAmount]; // Asteroids
 	HUD hud; // HUD
 	PlayerStats playerStats; // Stats such as lives, score and active asteroids
