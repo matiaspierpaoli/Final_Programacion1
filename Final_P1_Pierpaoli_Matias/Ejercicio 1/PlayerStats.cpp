@@ -32,12 +32,18 @@ void PlayerStats::drawLives(int lives)
 
 void PlayerStats::drawScore(int score)
 {
-	goToCoordinates(getScreenWidth() - 10, 2);
+	goToCoordinates(getScreenWidth() - 11, 2);
 	cout << "Score: " << score << endl;
 }
 
 void PlayerStats::drawActiveAsteroids()
 {
-	goToCoordinates(getScreenWidth() / 2 - 10, 1);
+	goToCoordinates(getScreenWidth() / 2 - 10, 2);
 	cout << "Active Asteroids: " << activeAsteroids << endl;
+}
+
+void PlayerStats::drawObjective()
+{
+	goToCoordinates(getScreenWidth() - 16, 3);
+	cout << "Reach " << objective << " to win" << endl;
 }

@@ -10,7 +10,7 @@
 class GameManager
 {
 private:
-	static const int asteroidsAmount = 4;
+	static const int asteroidsAmount = 6;
 
 	Entity* ship;
 	list<Bullet*> bullets;

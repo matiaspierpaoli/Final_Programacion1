@@ -7,6 +7,7 @@ class PlayerStats
 { 
 private:
 	int activeAsteroids;
+	int objective = 10;
 
 public:
 	PlayerStats();
@@ -15,6 +16,7 @@ public:
 	void substractActiveAsteroids();
 	void drawLives(int lives);
 	void drawScore(int score);
+	void drawObjective();
 	void drawActiveAsteroids();
 };
 

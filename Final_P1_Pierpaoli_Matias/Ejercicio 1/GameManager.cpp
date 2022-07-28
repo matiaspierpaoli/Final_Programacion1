@@ -49,6 +49,7 @@ void GameManager::drawScreen()
 		playerStats.drawLives(((Ship*)ship)->getCurrentLives());
 		playerStats.drawScore(((Ship*)ship)->getCurrentScore());
 		playerStats.drawActiveAsteroids();
+		playerStats.drawObjective();
 
 		hud.drawFrameHUD();
 
