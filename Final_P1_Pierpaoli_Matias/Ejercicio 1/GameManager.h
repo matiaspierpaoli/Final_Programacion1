@@ -10,17 +10,18 @@
 class GameManager
 {
 private:
-	static const int asteroidsAmount = 6;
+	static const int asteroidsAmount = 6; // Number of asteroids
 
-	Entity* ship;
-	list<Bullet*> bullets;
-	Entity* asteroids[asteroidsAmount];
-	HUD hud;
-	PlayerStats playerStats;
+	// Objects
+	Entity* ship; // Player
+	list<Bullet*> bullets; // Bullets
+	Entity* asteroids[asteroidsAmount]; // Asteroids
+	HUD hud; // HUD
+	PlayerStats playerStats; // Stats such as lives, score and active asteroids
 	bool exit = false; // Exit
 
-	void drawScreen();
-	void updateScreen();
+	void drawScreen(); // Output
+	void updateScreen(); // Update
 
 public:
 	GameManager(); // Constructor

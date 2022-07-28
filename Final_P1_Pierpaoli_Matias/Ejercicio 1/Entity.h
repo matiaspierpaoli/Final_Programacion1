@@ -8,6 +8,7 @@
 class Entity
 {
 private:
+	// Properties
 	Position* position;
 	Size* size;
 
@@ -16,14 +17,19 @@ public:
 	~Entity();
 
 	virtual void draw(int x, int y);
+
+	// Movement
 	void travelUp();
 	void travelDown();
 	void travelLeft();
 	void travelRight();
+
 	Position getPosition();
 	Size getSize();
-	bool checkCollision(Position position1, Size size1, Position position2, Size size2);
-	bool outOfBounds();
+
+	bool checkCollision(Position position1, Size size1, Position position2, Size size2); // Check if collision within two entities
+	bool outOfBounds(); // Check if collision with frame
+
 	void respawnAsteroid();
 };
 

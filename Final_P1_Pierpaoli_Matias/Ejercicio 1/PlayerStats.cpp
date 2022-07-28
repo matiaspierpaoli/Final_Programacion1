@@ -26,7 +26,7 @@ void PlayerStats::drawLives(int lives)
 	for (int i = 0; i < lives; i++)
 	{
 		goToCoordinates(10 + i, 2);
-		cout << (char)3;
+		cout << (char)3; // Draw hearts
 	}	
 }
 

@@ -19,9 +19,9 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
-	delete ship;
+	delete ship; // Delete player
 
-	bullets.clear();
+	bullets.clear(); // Clearing the bullets list
 
 	// Deleting every object to erase memory
 	for (int i = 0; i < asteroidsAmount; i++)
@@ -32,7 +32,7 @@ GameManager::~GameManager()
 void GameManager::gameLoop()
 {
 	// Main game loop
-	while (!exit) // While exit or ESC is not pressed in menu
+	while (!exit) // While exit is false
 	{
 		updateScreen();
 		drawScreen();		
@@ -46,23 +46,26 @@ void GameManager::drawScreen()
 {
 	if (!exit)
 	{
+		// HUD
 		playerStats.drawLives(((Ship*)ship)->getCurrentLives());
 		playerStats.drawScore(((Ship*)ship)->getCurrentScore());
 		playerStats.drawActiveAsteroids();
 		playerStats.drawObjective();
-
 		hud.drawFrameHUD();
 
+		// Player
 		if (((Ship*)ship)->getCurrentLives() <= 0)
 			((Ship*)ship)->explode();
 		else
 			ship->draw(ship->getPosition().getX(), ship->getPosition().getY());
 
+		// Bullets
 		for (auto it = bullets.begin(); it != bullets.end(); it++)
 		{
 			(*it)->draw((*it)->getPosition().getX(), (*it)->getPosition().getY());
 		}
 
+		// Asteroids
 		for (int i = 0; i < asteroidsAmount; i++)
 		{
 			asteroids[i]->draw(asteroids[i]->getPosition().getX(), asteroids[i]->getPosition().getY());
@@ -74,6 +77,7 @@ void GameManager::updateScreen()
 {
 	if (!exit)
 	{
+		// Input
 		if (_kbhit())
 		{
 			char tecla = _getch();			
@@ -85,6 +89,7 @@ void GameManager::updateScreen()
 			}
 		}
 
+		// Move or respawn bullets
 		for (auto it = bullets.begin(); it != bullets.end();)
 		{
 			(*it)->travelUp();
@@ -96,6 +101,7 @@ void GameManager::updateScreen()
 			else it++;
 		}
 
+		// Move or respawn asteroids
 		for (int i = 0; i < asteroidsAmount; i++)
 		{
 			if (asteroids[i]->outOfBounds())
@@ -132,12 +138,13 @@ void GameManager::updateScreen()
 			}
 		}
 
-		if (((Ship*)ship)->getCurrentLives() == 0)
+		// Check game status
+		if (((Ship*)ship)->getCurrentLives() == 0) // Lives == 0
 		{
 			hud.showDefeat();
 			exit = true;
 		}
-		else if (((Ship*)ship)->getCurrentScore() == 10)
+		else if (((Ship*)ship)->getCurrentScore() == 10) // Score == objective
 		{
 			hud.showVictory();
 			exit = true;
