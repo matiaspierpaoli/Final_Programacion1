@@ -1,4 +1,6 @@
-#pragma once
+#ifndef GAMEMANAGER_H
+#define GAMEMANAGER_H
+
 #include "Ship.h"
 #include "Bullet.h"
 #include "Asteroid.h"
@@ -9,7 +11,7 @@ class GameManager
 {
 private:
 	static const int asteroidsAmount = 4;
-	
+
 	Entity* ship;
 	list<Bullet*> bullets;
 	Entity* asteroids[asteroidsAmount];
@@ -19,9 +21,11 @@ private:
 
 	void drawScreen();
 	void updateScreen();
-	
+
 public:
 	GameManager(); // Constructor
 	~GameManager(); // Destructor
 	void gameLoop(); // Main game loop called in main()
 };
+
+#endif GAMEMANAGER_H

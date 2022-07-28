@@ -1,4 +1,6 @@
-#pragma once
+#ifndef SHIP_H
+#define SHIP_H
+
 #include "Entity.h"
 
 class Ship : public Entity
@@ -15,8 +17,8 @@ public:
 	int getCurrentLives();
 	int getCurrentScore();
 	void explode();
-	
-
 };
+
+#endif SHIP_H
 
 

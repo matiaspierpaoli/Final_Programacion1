@@ -1,4 +1,6 @@
-#pragma once
+#ifndef PLAYERSTATS_H
+#define PLAYERSTATS_H
+
 #include "Ship.h"
 
 class PlayerStats 
@@ -14,6 +16,6 @@ public:
 	void drawLives(int lives);
 	void drawScore(int score);
 	void drawActiveAsteroids();
-
-
 };
+
+#endif PLAYERSTATS_H

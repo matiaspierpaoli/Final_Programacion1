@@ -1,4 +1,5 @@
-#pragma once
+#ifndef SIZE_H
+#define SIZE_H
 
 class Size
 {
@@ -12,3 +13,5 @@ public:
 	int getWidth();
 	int getHeight();
 };
+
+#endif SIZE_H

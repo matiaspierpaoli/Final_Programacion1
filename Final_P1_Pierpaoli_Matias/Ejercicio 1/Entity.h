@@ -1,4 +1,6 @@
-#pragma once
+#ifndef ENTITY_H
+#define ENTITY_H
+
 #include "Header.h"
 #include "Position.h"
 #include "Size.h"
@@ -23,6 +25,6 @@ public:
 	bool checkCollision(Position position1, Size size1, Position position2, Size size2);
 	bool outOfBounds();
 	void respawnAsteroid();
-	
-
 };
+
+#endif ENTITY_H
